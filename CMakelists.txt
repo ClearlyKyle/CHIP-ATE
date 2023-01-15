@@ -1,0 +1,21 @@
+cmake_minimum_required(VERSION 3.10)
+
+project(CHIP8)
+
+add_subdirectory(tests/test_suite)
+include_directories(tests/test_suite)
+
+add_subdirectory(ChipEight)
+include_directories(ChipEight)
+
+include_directories(tests)
+
+set(TEST_ADD tests/test_Arithmetic.c)
+
+add_executable(TEST_ADD ${TEST_ADD})
+target_link_libraries(TEST_ADD test_suite)
+
+set(TEST_LOADING tests/test_Loading.c)
+
+add_executable(TEST_LOADING ${TEST_LOADING})
+target_link_libraries(TEST_LOADING test_suite CHIP8)

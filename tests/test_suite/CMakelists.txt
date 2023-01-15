@@ -1,0 +1,4 @@
+cmake_minimum_required(VERSION 3.10)
+
+# Declare the library
+add_library(test_suite INTERFACE test_suite.h)
