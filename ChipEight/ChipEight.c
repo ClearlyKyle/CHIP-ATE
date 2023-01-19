@@ -71,8 +71,33 @@ void C8_load_memory(const uint8_t *program_memory, const size_t size)
     memcpy_s(start_address, 4096 - 0x200, (const void *)program_memory, size);
 }
 
+/*
+Set all the elements of the gfx array to zero, effectively clearing the screen.
+*/
+INTERNAL INLINE void execute_00E0(void)
+{
+    memset(gfx, 0, sizeof(gfx));
+}
+
 void C8_execute_opcode(const uint16_t opcode)
 {
+    const uint8_t x  = (opcode & 0x0F00) >> 8;
+    const uint8_t y  = (opcode & 0x00F0) >> 4;
+    const uint8_t n  = (opcode & 0x000F);
+    const uint8_t nn = (opcode & 0x000F);
+
+    switch (opcode & 0xF000)
+    {
+    case 0x0000:
+        switch (opcode & 0x00FF)
+        {
+        case 0x00E0:
+            execute_00E0();
+            break;
+    default:
+        // handle unknown opcode
+        break;
+    }
 }
 
 }
