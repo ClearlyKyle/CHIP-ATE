@@ -79,6 +79,16 @@ INTERNAL INLINE void execute_00E0(void)
     memset(gfx, 0, sizeof(gfx));
 }
 
+/*
+Jumps the program execution back to the address where the subroutine
+was called, thus returning from the subroutine.
+*/
+INTERNAL INLINE void execute_00EE(void)
+{
+    SP--;
+    PC = stack[SP];
+}
+
 void C8_execute_opcode(const uint16_t opcode)
 {
     const uint8_t x  = (opcode & 0x0F00) >> 8;
@@ -93,6 +103,9 @@ void C8_execute_opcode(const uint16_t opcode)
         {
         case 0x00E0:
             execute_00E0();
+            break;
+        case 0x00EE:
+            execute_00EE();
             break;
     default:
         // handle unknown opcode
