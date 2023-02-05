@@ -89,6 +89,14 @@ INTERNAL INLINE void execute_00EE(void)
     PC = stack[SP];
 }
 
+/*
+Does Nothing
+*/
+INTERNAL INLINE void execute_0NNN(void)
+{
+    // Do nothing
+}
+
 void C8_execute_opcode(const uint16_t opcode)
 {
     const uint8_t x  = (opcode & 0x0F00) >> 8;
@@ -107,6 +115,12 @@ void C8_execute_opcode(const uint16_t opcode)
         case 0x00EE:
             execute_00EE();
             break;
+        default:
+            const uint16_t nnn = (opcode & 0x0FFF);
+            execute_0NNN(nnn);
+            break;
+        }
+        break;
     default:
         // handle unknown opcode
         break;
