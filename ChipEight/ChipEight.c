@@ -97,6 +97,20 @@ INTERNAL INLINE void execute_0NNN(void)
     // Do nothing
 }
 
+/*
+address : The 12-bit address to set the program counter to
+
+Sets the program counter (PC) to the first 12bits of the opcode,
+effectively jumping to the specified address in memory.
+Used for calling subroutines, once the subroutine is finished,
+the program counter should point to the next instruction after the call.
+*/
+INTERNAL INLINE void execute_1NNN(const uint16_t opcode)
+{
+    const uint16_t address = opcode & 0x0FFFu;
+
+    PC = address;
+}
 void C8_execute_opcode(const uint16_t opcode)
 {
     const uint8_t x  = (opcode & 0x0F00) >> 8;
