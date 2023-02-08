@@ -111,6 +111,22 @@ INTERNAL INLINE void execute_1NNN(const uint16_t opcode)
 
     PC = address;
 }
+
+/*
+address : The 12-bit address of the subroutine to call
+
+The function first stores the current value of the program counter (PC)
+on the stack, by assigning it to the current top of the stack and then
+incrementing the stack pointer (SP). This allows the program to later
+return to the instruction following the call.
+*/
+INTERNAL INLINE void execute_2NNN(const uint16_t opcode)
+{
+    const uint16_t address = opcode & 0x0FFFu;
+
+    stack[SP++] = PC;
+    PC          = address;
+}
 void C8_execute_opcode(const uint16_t opcode)
 {
     const uint8_t x  = (opcode & 0x0F00) >> 8;
@@ -130,8 +146,23 @@ void C8_execute_opcode(const uint16_t opcode)
             execute_00EE();
             break;
         default:
-            const uint16_t nnn = (opcode & 0x0FFF);
-            execute_0NNN(nnn);
+                    execute_0NNN();
+                    break;
+            }
+            break;
+        case 0x1000:
+            // const uint16_t nnn = (opcode & 0x0FFF);
+            execute_1NNN(opcode);
+            break;
+        case 0x2000:
+            // const uint16_t nnn = (opcode & 0x0FFF);
+            execute_2NNN(opcode);
+            break;
+        case 0x8000:
+            switch (opcode & 0x000F)
+            {
+                default:
+                    // handle unknown opcode
             break;
         }
         break;
