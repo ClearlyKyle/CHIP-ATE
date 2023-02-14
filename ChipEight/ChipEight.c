@@ -50,9 +50,8 @@ INTERNAL uint8_t  SP = 0; // Stack Pointer
 #define STACK_POP(VALUE) stack[--SP]
 
 // perforn a check for outof bounds register index
-#define CHECK_XY_RANGE(X, Y) assert(x < 16 && y < 16);
-#define CHECK_X_RANGE(X)     assert((X));
-#define CHECK_Y_RANGE(Y)     CHECK_X_RANGE(Y);
+#define CHECK_X_RANGE(X) assert((X) < 16);
+#define CHECK_Y_RANGE(Y) CHECK_X_RANGE(Y);
 
 // initialises memory to 0 and loads the fontset into memory
 void C8_startup(void)
