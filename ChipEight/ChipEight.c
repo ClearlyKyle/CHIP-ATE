@@ -126,6 +126,20 @@ INTERNAL INLINE void execute_2NNN(const uint16_t opcode)
     stack[SP++] = PC;
     PC          = address;
 }
+
+/*
+x  : The index of the register VX
+nn : The 8-bit immediate value to compare with the value of register VX
+
+Skip the next instruction if the value of register VX is equal to NN
+*/
+INTERNAL INLINE void execute_3XNN(const uint8_t x, const uint8_t nn)
+{
+    CHECK_X_RANGE(x);
+
+    if (V[x] == nn)
+        PC += 2;
+}
 void C8_execute_opcode(const uint16_t opcode)
 {
     const uint8_t x  = (opcode & 0x0F00) >> 8;
@@ -156,6 +170,10 @@ void C8_execute_opcode(const uint16_t opcode)
         case 0x2000:
             // const uint16_t nnn = (opcode & 0x0FFF);
             execute_2NNN(opcode);
+            break;
+        case 0x3000:
+            execute_3XNN(x, nn);
+            break;
             break;
         case 0x8000:
             switch (opcode & 0x000F)
