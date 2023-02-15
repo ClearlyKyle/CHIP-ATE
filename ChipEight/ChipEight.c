@@ -140,6 +140,20 @@ INTERNAL INLINE void execute_3XNN(const uint8_t x, const uint8_t nn)
     if (V[x] == nn)
         PC += 2;
 }
+
+/*
+x  : The index of the register VX
+nn : The 8-bit immediate value to compare with the value of register VX
+
+Skip the next instruction if the value of register VX is not equal to NN
+*/
+INTERNAL INLINE void execute_4XNN(const uint8_t x, const uint8_t nn)
+{
+    CHECK_X_RANGE(x);
+
+    if (V[x] != nn)
+        PC += 2;
+}
 void C8_execute_opcode(const uint16_t opcode)
 {
     const uint8_t x  = (opcode & 0x0F00) >> 8;
@@ -173,6 +187,9 @@ void C8_execute_opcode(const uint16_t opcode)
             break;
         case 0x3000:
             execute_3XNN(x, nn);
+            break;
+        case 0x4000:
+            execute_4XNN(x, nn);
             break;
             break;
         case 0x8000:
