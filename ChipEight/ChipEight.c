@@ -154,6 +154,21 @@ INTERNAL INLINE void execute_4XNN(const uint8_t x, const uint8_t nn)
     if (V[x] != nn)
         PC += 2;
 }
+
+/*
+x : The index of the register VX
+y : The index of the register VY
+
+Skip the next instruction if the value of register VX is equal to the value of register VY
+*/
+INTERNAL INLINE void execute_5XY0(const uint8_t x, const uint8_t y)
+{
+    CHECK_XY_RANGE(x, y);
+
+    if (V[x] == V[y])
+        PC += 2;
+}
+
 void C8_execute_opcode(const uint16_t opcode)
 {
     const uint8_t x  = (opcode & 0x0F00) >> 8;
@@ -190,6 +205,9 @@ void C8_execute_opcode(const uint16_t opcode)
             break;
         case 0x4000:
             execute_4XNN(x, nn);
+            break;
+        case 0x5000:
+            execute_5XY0(x, y);
             break;
             break;
         case 0x8000:
