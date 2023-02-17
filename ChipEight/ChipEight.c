@@ -169,6 +169,18 @@ INTERNAL INLINE void execute_5XY0(const uint8_t x, const uint8_t y)
         PC += 2;
 }
 
+/*
+x  : The index of the register VX
+nn : The 8-bit immediate value to be loaded into register VX
+
+Sets the value of register VX to the immediate value NN passed as argument
+*/
+INTERNAL INLINE void execute_6XNN(const uint8_t x, const uint8_t nn)
+{
+    CHECK_X_RANGE(x);
+
+    V[x] = nn;
+}
 void C8_execute_opcode(const uint16_t opcode)
 {
     const uint8_t x  = (opcode & 0x0F00) >> 8;
@@ -208,6 +220,9 @@ void C8_execute_opcode(const uint16_t opcode)
             break;
         case 0x5000:
             execute_5XY0(x, y);
+            break;
+        case 0x6000:
+            execute_6XNN(x, nn);
             break;
             break;
         case 0x8000:
