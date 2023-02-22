@@ -48,6 +48,7 @@ INTERNAL uint8_t  KEYPAD[16]   = {0}; // Keypad pressed or not pressed
 
 INTERNAL uint16_t PC    = 0; // Program Counter
 INTERNAL uint8_t  SP    = 0; // Stack Pointer
+INTERNAL uint16_t INDEX = 0; // Index register, used to store memory addresses
 
 // takes a 16-bit VALUE and stores it on the top of the stack
 // stack pointer is incremented before assigment
@@ -64,8 +65,20 @@ INTERNAL uint8_t  SP    = 0; // Stack Pointer
 // initialises memory to 0 and loads the fontset into memory
 void C8_startup(void)
 {
+    srand(time(NULL));
+
+    PC    = 0;
+    SP    = 0;
+    INDEX = 0;
+
+    carry_flag  = 0;
+    borrow_flag = 0;
+    draw_flag   = 0;
+    delay_timer = 0;
+    sound_timer = 0;
+
     memset(memory, 0, 4096);
-    memcpy_s(&memory[0x50], sizeof(memory), chip8_fontset, sizeof(uint8_t) * 80);
+    memcpy_s(&memory[FONTSET_START_ADDRESS], sizeof(memory), chip8_fontset, sizeof(uint8_t) * 80);
 }
 
 void C8_load_memory(const uint8_t *program_memory, const size_t size)
