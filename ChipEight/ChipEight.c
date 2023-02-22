@@ -28,6 +28,11 @@ INTERNAL const uint8_t chip8_fontset[80] =
         0xF0, 0x80, 0xF0, 0x80, 0x80  // F
 };
 
+#define SCREEN_WIDTH  64
+#define SCREEN_HEIGHT 32
+
+#define FONTSET_START_ADDRESS 0x50
+
 // Flags
 INTERNAL uint8_t carry_flag  = 0;
 INTERNAL uint8_t borrow_flag = 0;
