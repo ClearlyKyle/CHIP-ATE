@@ -37,14 +37,17 @@ INTERNAL const uint8_t chip8_fontset[80] =
 INTERNAL uint8_t carry_flag  = 0;
 INTERNAL uint8_t borrow_flag = 0;
 INTERNAL uint8_t draw_flag   = 0; // Screen needs to be updated or not
+INTERNAL uint8_t delay_timer = 0;
+INTERNAL uint8_t sound_timer = 0;
 
 INTERNAL uint8_t  V[16]        = {0}; // Data registers
 INTERNAL uint8_t  memory[4096] = {0}; // Memory
 INTERNAL uint8_t  gfx[64 * 32] = {0}; // Video memory, value 0 pixel is off, value 1 is on
 INTERNAL uint16_t stack[16]    = {0}; // Program Stack
+INTERNAL uint8_t  KEYPAD[16]   = {0}; // Keypad pressed or not pressed
 
-INTERNAL uint16_t PC = 0; // Program Counter
-INTERNAL uint8_t  SP = 0; // Stack Pointer
+INTERNAL uint16_t PC    = 0; // Program Counter
+INTERNAL uint8_t  SP    = 0; // Stack Pointer
 
 // takes a 16-bit VALUE and stores it on the top of the stack
 // stack pointer is incremented before assigment
