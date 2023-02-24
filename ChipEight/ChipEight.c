@@ -215,6 +215,20 @@ INTERNAL INLINE void execute_7XNN(const uint8_t x, const uint8_t nn)
 
     V[x] += nn;
 }
+
+/*
+x  : The index of the register VX
+y  : The index of the register VY
+
+Set the value of the VX register to the value of the VY register
+*/
+INTERNAL INLINE void execute_9XY0(const uint8_t x, const uint8_t y)
+{
+    CHECK_X_RANGE(x);
+    CHECK_Y_RANGE(y);
+
+    V[x] = V[y];
+}
 void C8_execute_opcode(const uint16_t opcode)
 {
     const uint8_t x  = (opcode & 0x0F00) >> 8;
