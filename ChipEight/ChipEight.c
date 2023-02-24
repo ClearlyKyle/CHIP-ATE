@@ -202,6 +202,19 @@ INTERNAL INLINE void execute_6XNN(const uint8_t x, const uint8_t nn)
 
     V[x] = nn;
 }
+
+/*
+x  : The index of the register VX
+nn : The 8-bit immediate value to be loaded into register VX
+
+Adds the immediate value NN to the register VX
+*/
+INTERNAL INLINE void execute_7XNN(const uint8_t x, const uint8_t nn)
+{
+    CHECK_X_RANGE(x);
+
+    V[x] += nn;
+}
 void C8_execute_opcode(const uint16_t opcode)
 {
     const uint8_t x  = (opcode & 0x0F00) >> 8;
