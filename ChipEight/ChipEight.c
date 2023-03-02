@@ -265,6 +265,23 @@ INTERNAL INLINE void execute_8XY3(const uint8_t x, const uint8_t y)
 
     V[x] ^= V[y];
 }
+/*
+x : The index of the register VX
+
+Perform the bitwise right shift operation on the value stored
+in the register VX, and store the result back in VX. The rightmost
+bit of VX is stored in the least significant bit of the carry flag,
+which can be accessed using the register VF.
+*/
+INTERNAL INLINE void execute_8XY6(const uint8_t x)
+{
+    CHECK_X_RANGE(x);
+
+    // Save LSB in VF
+    V[0xF] = (V[x] & 0x1u);
+
+    V[x] >>= 1;
+}
 */
 INTERNAL INLINE void execute_9XY0(const uint8_t x, const uint8_t y)
 {
@@ -328,6 +345,9 @@ void C8_execute_opcode(const uint16_t opcode)
                     break;
                 case 0x0003:
                     execute_8XY3(x, y);
+                    break;
+                case 0x0006:
+                    execute_8XY6(x);
                     break;
                 default:
                     // handle unknown opcode
