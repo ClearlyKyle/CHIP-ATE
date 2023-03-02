@@ -221,6 +221,20 @@ INTERNAL INLINE void execute_7XNN(const uint8_t x, const uint8_t nn)
 /*
 x  : The index of the register VX
 y  : The index of the register VY
+/*
+x : The index of the register VX
+y : The index of the register VY
+
+Performs a bitwise OR operation between the
+values of registers VX and VY and stores the result in VX.
+*/
+INTERNAL INLINE void execute_8XY1(const uint8_t x, const uint8_t y)
+{
+    CHECK_X_RANGE(x);
+    CHECK_Y_RANGE(y);
+
+    V[x] |= V[y];
+}
 
 Set the value of the VX register to the value of the VY register
 */
@@ -278,6 +292,9 @@ void C8_execute_opcode(const uint16_t opcode)
         case 0x8000:
             switch (opcode & 0x000F)
             {
+                case 0x0001:
+                    execute_8XY1(x, y);
+                    break;
                 default:
                     // handle unknown opcode
             break;
