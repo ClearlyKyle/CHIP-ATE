@@ -1,5 +1,7 @@
 #include "ChipEight.h"
 
+#include <time.h>
+
 #if defined(_MSC_VER)
 #define INLINE __inline
 #else
@@ -65,7 +67,7 @@ INTERNAL uint16_t INDEX = 0; // Index register, used to store memory addresses
 // initialises memory to 0 and loads the fontset into memory
 void C8_startup(void)
 {
-    srand(time(NULL));
+    srand((unsigned int)time(NULL));
 
     PC    = 0;
     SP    = 0;
