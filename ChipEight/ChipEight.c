@@ -44,7 +44,7 @@ INTERNAL uint8_t sound_timer = 0;
 
 INTERNAL uint8_t  V[16]        = {0}; // Data registers
 INTERNAL uint8_t  memory[4096] = {0}; // Memory
-INTERNAL uint8_t  gfx[64 * 32] = {0}; // Video memory, value 0 pixel is off, value 1 is on
+INTERNAL uint32_t gfx[64 * 32] = {0}; // Video memory, value 0 pixel is off, value 1 is on
 INTERNAL uint16_t stack[16]    = {0}; // Program Stack
 INTERNAL uint8_t  KEYPAD[16]   = {0}; // Keypad pressed or not pressed
 
