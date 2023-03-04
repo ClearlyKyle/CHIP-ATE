@@ -186,7 +186,8 @@ Skip the next instruction if the value of register VX is equal to the value of r
 */
 INTERNAL INLINE void execute_5XY0(const uint8_t x, const uint8_t y)
 {
-    CHECK_XY_RANGE(x, y);
+    CHECK_X_RANGE(x);
+    CHECK_Y_RANGE(y);
 
     if (V[x] == V[y])
         PC += 2;
