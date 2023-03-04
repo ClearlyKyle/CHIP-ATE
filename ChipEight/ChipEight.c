@@ -135,7 +135,7 @@ INTERNAL INLINE void execute_1NNN(const uint16_t opcode)
 }
 
 /*
-address : The 12-bit address of the subroutine to call
+opcode : Current 16-bit opcode being executed
 
 The function first stores the current value of the program counter (PC)
 on the stack, by assigning it to the current top of the stack and then
@@ -218,6 +218,17 @@ INTERNAL INLINE void execute_7XNN(const uint8_t x, const uint8_t nn)
     V[x] += nn;
 }
 
+/*
+opcode : Current 16-bit opcode being executed
+
+Jump to location NNN + V0
+*/
+INTERNAL INLINE void execute_BNNN(const uint16_t opcode)
+{
+    const uint16_t nnn = opcode & 0x0FFFu;
+
+    PC = V[0] + nnn;
+}
 /*
 x  : The index of the register VX
 y  : The index of the register VY
@@ -371,6 +382,12 @@ void C8_execute_opcode(const uint16_t opcode)
             break;
         }
         break;
+        case 0xA000:
+            execute_ANNN(opcode);
+            break;
+        case 0xB000:
+            execute_BNNN(opcode);
+            break;
     default:
         // handle unknown opcode
         break;
