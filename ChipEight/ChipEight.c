@@ -294,6 +294,26 @@ INTERNAL INLINE void execute_8XY6(const uint8_t x)
 
     V[x] >>= 1;
 }
+
+/*
+x : The index of the register VX
+y : The index of the register VY
+
+First subtract the value in VY from the value in register VX, and store the result
+in register VX. Then check if there was a borrow by comparing the values in VX and VY.
+If the value in register VC was less than the value in register VY, the borrow flag
+is set to 0, otherwise it is set to 1.
+*/
+INTERNAL INLINE void execute_8XY7(const uint8_t x, const uint8_t y)
+{
+    CHECK_X_RANGE(x);
+    CHECK_Y_RANGE(y);
+
+    V[0xF] = (V[y] > V[x]) ? 1 : 0;
+
+    V[x] = V[y] - V[x];
+}
+
 /*
 x : The index of the register VX
 
