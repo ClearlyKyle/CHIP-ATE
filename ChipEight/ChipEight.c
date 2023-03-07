@@ -328,13 +328,22 @@ INTERNAL INLINE void execute_8XYE(const uint8_t x)
 
     V[x] <<= 1;
 }
+
+/*
+x : The index of the register VX
+y : The index of the register VY
+
+If the value of VX != VY then increment the PC by 2, to skip the next instruction
+(4 is used here as the main loop has used 2 cycles already)
 */
 INTERNAL INLINE void execute_9XY0(const uint8_t x, const uint8_t y)
 {
     CHECK_X_RANGE(x);
     CHECK_Y_RANGE(y);
 
-    V[x] = V[y];
+    if (V[x] != V[y])
+        PC += 2; // Skip next instruction
+}
 }
 void C8_execute_opcode(const uint16_t opcode)
 {
