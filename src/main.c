@@ -5,6 +5,16 @@
 #define WINDOW_HEIGHT LOW_RES_HEIGHT
 #define PIXEL_SCALE   (20)
 
+#define SDL_CHECK(fn)                          \
+    do                                         \
+    {                                          \
+        if ((fn) < 0)                          \
+        {                                      \
+            LOG_ERROR("%s\n", SDL_GetError()); \
+            exit(1);                           \
+        }                                      \
+    } while (0)
+
 struct sdl
 {
     SDL_Window       *window;
@@ -88,6 +98,9 @@ int main(int argc, char *argv[])
     if (sdl_init(&sdl) == false)
         return EXIT_FAILURE;
 
+    SDL_CHECK(SDL_RenderSetLogicalSize(sdl.renderer, WINDOW_WIDTH, WINDOW_HEIGHT));
+    char title[256] = {0};
+    SDL_SetWindowTitle(sdl.window, title);
     sdl_cleanup(&sdl);
 
     LOG_INFO("Exit success");
