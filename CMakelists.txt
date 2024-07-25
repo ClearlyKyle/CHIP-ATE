@@ -15,6 +15,7 @@ include_directories(tests)
 # test name of "C8_${name}"
 set(TEST_NAMES_LIST
     "test_Arithmetic"
+    "test_BitOp"
     "test_Flow"
 )
 
